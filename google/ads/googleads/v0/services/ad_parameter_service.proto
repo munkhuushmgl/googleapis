@@ -19,6 +19,7 @@ package google.ads.googleads.v0.services;
 
 import "google/ads/googleads/v0/resources/ad_parameter.proto";
 import "google/api/annotations.proto";
+import "google/api/client.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/wrappers.proto";
 import "google/rpc/status.proto";
@@ -36,6 +37,9 @@ option ruby_package = "Google::Ads::GoogleAds::V0::Services";
 
 // Service to manage ad parameters.
 service AdParameterService {
+  // Don't know what these should be; just adding something so generation passes.
+  option (google.api.default_host) = "ads.googleapis.com";
+
   // Returns the requested ad parameter in full detail.
   rpc GetAdParameter(GetAdParameterRequest)
       returns (google.ads.googleads.v0.resources.AdParameter) {
