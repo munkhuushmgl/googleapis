@@ -1,0 +1,55 @@
+test:
+  suites:
+  - name: Cloud AutoML Vision
+    setup:
+      # Read Project ID from Environment Variable
+    - code: project_id="java-docs-samples-testing"
+    - code: cloud_region = "us-central1"
+    - code: dataset_name = "java_unit_test_dataset"
+    - call:
+        sample: automl_vision_create_dataset
+        params:
+          project_id: { variable: project_id }
+          location: { literal: "us-central1" }
+          dataset_display_name: { variable: dataset_name }
+    - extract_match:
+        pattern: datasets/([^\s]+)
+        variable: dataset_id
+    - log: ["Matched dataset_id: %s", dataset_id]
+
+    - assert_contains:
+      - variable: dataset_name  
+    teardown:
+      # Read Project ID from Environment Variable
+    - call: 
+        sample: automl_vision_delete_dataset
+        params:
+          project_id: { variable: project_id }
+          location: { literal: "us-central1" }
+          dataset_id: { variable: dataset_id }
+    - assert_contains:
+      - literal: "Dataset deleted."
+
+    cases:
+    - name: List Datasets
+      spec:
+      - call: 
+          sample: automl_vision_list_datasets
+          params: 
+            location: { literal: "us-central1" }
+            project_id: { variable: project_id }
+            filter: { literal: "" }
+      - assert_contains:
+        - literal: "Dataset name: "
+        - variable: dataset_name
+    - name: Get Dataset
+      spec:
+      - call: 
+          sample: automl_vision_get_dataset
+          params: 
+            location: { literal: "us-central1" }
+            project_id: { variable: project_id }
+            dataset_id: { variable: dataset_id }
+      - assert_contains:
+        - literal: "Dataset name: " 
+        - variable: dataset_name

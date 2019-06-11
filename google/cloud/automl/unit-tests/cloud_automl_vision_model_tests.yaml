@@ -1,0 +1,70 @@
+test:
+  suites:
+  - name: Cloud AutoML Vision Model API IT
+    setup:
+      # Read Project ID from Environment Variable
+    - code: project_id="java-docs-samples-testing"
+    - code: cloud_region = "us-central1"
+    # do not delete model - guaranteed to be there
+    - code: model_id = "VCN8185485836792365056"
+    # - code: model_eval_id=276916870954389739
+    cases:
+    - name: List Model
+      spec:
+      - call: 
+          sample: automl_vision_list_models
+          params: 
+            location: { variable: cloud_region }
+            project_id: { variable: project_id }
+            filter: { literal: "" }
+      - assert_contains:
+        - literal: "Model name:"
+        - literal: "Training budget:"
+        - literal: "Training cost:"
+
+
+    - name: Get Model
+      spec:
+      - call: 
+          sample: automl_vision_get_model
+          params: 
+            location: { variable: cloud_region }
+            project_id: { variable: project_id }
+            model_id: { variable: model_id }
+      - assert_contains:
+        - literal: "Model display name:"
+        - literal: "do_not_delete_me_20190403112237"
+
+    # TODO - listModelEvaluations
+    - name: List Model Evaluations
+      spec:
+      - call:
+          sample: automl_vision_list_model_evaluations
+          params: 
+            location: { variable: cloud_region }
+            project_id: { variable: project_id }
+            model_id: { variable: model_id }
+            filter: { literal: "" }
+      - extract_match:
+          pattern: modelEvaluations/([^\s]+)
+          variable: model_eval_id
+      - log: ["Matched model eval id: %s", model_eval_id]
+      - assert_contains:
+        - literal: "name:"
+        - variable: model_eval_id
+    # TODO - getModelEvaluation
+    - name: Get Model Evaluation
+      spec:
+      - call: 
+          sample: automl_vision_get_model_evaluation
+          params:
+            location: { variable: cloud_region }
+            project_id: { variable: project_id }
+            model_id: { variable: model_id }
+            model_eval_id: { variable: model_eval_id }
+      - log: ["PSST: %s", model_eval_id]
+      - assert_contains:
+        - literal: "name:"
+        - variable: model_eval_id
+        
+            # model_eval_id: { variable: model_eval_id }
