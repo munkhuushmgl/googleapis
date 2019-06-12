@@ -2,10 +2,14 @@ test:
   suites:
   - name: Cloud AutoML Vision
     setup:
-      # Read Project ID from Environment Variable
-    - code: project_id="java-docs-samples-testing"
     - code: cloud_region = "us-central1"
-    - code: dataset_name = "java_unit_test_dataset"
+      # Read Project ID from Environment Variable
+    - env:
+        what: GOOGLE_PROJECT_ID
+        var: project_id
+    - env:
+        what: AUTOML_TESTING_DATASET_NAME
+        var: dataset_name
     - call:
         sample: automl_vision_create_dataset
         params:
@@ -38,7 +42,7 @@ test:
           params: 
             location: { literal: "us-central1" }
             project_id: { variable: project_id }
-            filter: { literal: "" }
+            filter: { literal: "imageClassificationDatasetMetadata:*" }
       - assert_contains:
         - literal: "Dataset name: "
         - variable: dataset_name
