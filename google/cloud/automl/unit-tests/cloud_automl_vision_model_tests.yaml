@@ -5,14 +5,14 @@ test:
     - code: cloud_region = "us-central1"
       # Read Project ID from Environment Variable
     - env:
-        what: GOOGLE_PROJECT_ID
-        var: project_id
+        name: GOOGLE_PROJECT_ID
+        variable: project_id
     - env:
-        what: MODEL_ID
-        var: model_id
+        name: MODEL_ID
+        variable: model_id
     - env:
-        what: MODEL_DISPLAY_NAME
-        var: model_display_name
+        name: MODEL_DISPLAY_NAME
+        variable: model_display_name
     cases:
     - name: List Model
       spec:

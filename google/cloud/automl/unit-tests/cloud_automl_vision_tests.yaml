@@ -5,11 +5,11 @@ test:
     - code: cloud_region = "us-central1"
       # Read Project ID from Environment Variable
     - env:
-        what: GOOGLE_PROJECT_ID
-        var: project_id
+        name: GOOGLE_PROJECT_ID
+        variable: project_id
     - env:
-        what: AUTOML_TESTING_DATASET_NAME
-        var: dataset_name
+        name: AUTOML_TESTING_DATASET_NAME
+        variable: dataset_name
     - call:
         sample: automl_vision_create_dataset
         params:
