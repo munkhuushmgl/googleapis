@@ -493,7 +493,7 @@ interfaces:
         defaults:
         - parent%project="[Google Cloud Project ID]"
         - parent%location="us-central1"
-        - filter="test filter"
+        - filter="imageClassificationDatasetMetadata:*"
 
         attributes:
         - parameter: filter
@@ -541,7 +541,7 @@ interfaces:
         defaults:
         - parent%project="[Google Cloud Project ID]"
         - parent%location="us-central1"
-        - filter="test filter"
+        - filter="translation_dataset_metadata:*"
 
         attributes:
         - parameter: filter
@@ -589,7 +589,7 @@ interfaces:
         defaults:
         - parent%project="[Google Cloud Project ID]"
         - parent%location="us-central1"
-        - filter="test filter"
+        - filter="textClassificationDatasetMetadata:*"
 
         attributes:
         - parameter: filter
@@ -987,7 +987,7 @@ interfaces:
         defaults:
         - parent%project="[Google Cloud Project ID]"
         - parent%location="us-central1"
-        - filter="default_filter"
+        - filter="imageClassificationModelMetadata:*"
         attributes:
         - parameter: parent%project
           sample_argument_name: project_id
@@ -1259,7 +1259,7 @@ interfaces:
         - parent%project="[Google Cloud Project ID]"
         - parent%location="us-central1"
         - parent%model="default_model"
-        - filter="default_filter"
+        - filter=""
         attributes:
         - parameter: parent%project
           sample_argument_name: project_id
