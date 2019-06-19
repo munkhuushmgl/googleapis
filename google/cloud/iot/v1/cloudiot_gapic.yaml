@@ -147,6 +147,60 @@ interfaces:
       parent: location
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+
+    samples:
+      standalone:
+      - region_tag: iot_create_registry
+        value_sets: [iot_create_registry]
+
+    sample_value_sets:
+    - id: iot_create_registry
+      description: Create Device Registry
+
+      # Setup the request object
+      parameters:
+
+        # Set some default values
+        defaults:
+        - parent%project="[Google Cloud Project ID]"
+        - parent%location="us-central1"
+        - device_registry.id="my-registry"
+        # Configure request fields:
+        # - configure so you can provide them to the method (CLI)
+        # - give them a nice text description
+        # - and more
+        attributes:
+        - parameter: parent%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: parent%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: device_registry.id
+          sample_argument_name: registry_id
+          description: Identifier of this device registry, e.g. my-registry
+      # Print things out from the response!
+      on_success:
+      - print: 
+        - "Created registry: %s"
+        - $resp.name
+  # - name: GetDeviceRegistry
+  #   flattening:
+  #     groups:
+  #     - parameters:
+  #       - name
+  #   required_fields:
+  #   - name
+  #   header_request_params:
+  #   - name
+  #   retry_codes_name: idempotent
+  #   retry_params_name: default
+  #   field_name_patterns:
+  #     name: registry
+  #   resource_name_treatment: STATIC_TYPES
+  #   timeout_millis: 60000
+
+
   - name: GetDeviceRegistry
     flattening:
       groups:
@@ -162,6 +216,50 @@ interfaces:
       name: registry
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+
+    samples:
+      standalone:
+      - region_tag: iot_get_registry
+        value_sets: [iot_get_registry]
+
+    sample_value_sets:
+    - id: iot_get_registry
+      description: Get Device Registry
+
+      # Setup the request object
+      parameters:
+
+        # Set some default values
+        defaults:
+        - name%project="[Google Cloud Project ID]"
+        - name%location="us-central1"
+        - name%registry="[DeviceRegistry ID]"
+
+        # Configure request fields:
+        # - configure so you can provide them to the method (CLI)
+        # - give them a nice text description
+        # - and more
+        attributes:
+        - parameter: name%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: name%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: name%registry
+          sample_argument_name: registry_id
+          description: ID of the DeviceRegistry
+
+      # Print things out from the response!
+      on_success:
+
+      - print:
+        - "Device Registry ID: %s"
+        - $resp.id
+
+      - print: ["Name: %s", $resp.name]
+
+
   - name: UpdateDeviceRegistry
     flattening:
       groups:
@@ -194,6 +292,45 @@ interfaces:
       name: registry
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: iot_delete_registry
+        value_sets: [iot_delete_registry]
+
+    sample_value_sets:
+    - id: iot_delete_registry
+      description: Get Device Registry
+
+      # Setup the request object
+      parameters:
+
+        # Set some default values
+        defaults:
+        - name%project="[Google Cloud Project ID]"
+        - name%location="us-central1"
+        - name%registry="[DeviceRegistry ID]"
+
+        # Configure request fields:
+        # - configure so you can provide them to the method (CLI)
+        # - give them a nice text description
+        # - and more
+        attributes:
+        - parameter: name%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: name%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: name%registry
+          sample_argument_name: registry_id
+          description: ID of the DeviceRegistry
+
+      # Print things out from the response!
+      on_success:
+      - print:
+        - "Successfully deleted the registry"
+
+
   - name: ListDeviceRegistries
     flattening:
       groups:
@@ -216,6 +353,40 @@ interfaces:
       parent: location
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: iot_list_registries
+        value_sets: [iot_list_registries]
+
+    sample_value_sets:
+    - id: iot_list_registries
+      description: List Device Registries
+
+      # Setup the request object
+      parameters:
+
+        # Set some default values
+        defaults:
+        - parent%project="[Google Cloud Project ID]"
+        - parent%location="us-central1"
+        - page_size=5
+        # Configure request fields:
+        # - configure so you can provide them to the method (CLI)
+        # - give them a nice text description
+        # - and more
+        attributes:
+        - parameter: parent%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: parent%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+      on_success:
+        - print: ["ID: %s", $resp.id]
+        - print: ["name: %s\n", $resp.name]
+
+
+
   - name: CreateDevice
     flattening:
       groups:
@@ -233,6 +404,47 @@ interfaces:
       parent: registry
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: iot_create_device
+        value_sets: [iot_create_device]
+
+    sample_value_sets:
+    - id: iot_create_device
+      description: Create Device
+
+      # Setup the request object
+      parameters:
+        # Set some default values
+        defaults:
+        - parent%project="[Google Cloud Project ID]"
+        - parent%location="us-central1"
+        - parent%registry_id="[DeviceRegistry ID]"
+        - device.id="my-device"
+        # Configure request fields:
+        # - configure so you can provide them to the method (CLI)
+        # - give them a nice text description
+        # - and more
+        attributes:
+        - parameter: parent%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: parent%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: parent%registry
+          sample_argument_name: registry_id
+          description: registry_id, e.g. us-central1
+        - parameter: device.id
+          sample_argument_name: device_id
+          description: device id
+      on_success:
+        - print:
+          - "Created Device with ID: %s"
+          - $resp.id
+
+
+
   - name: GetDevice
     flattening:
       groups:
@@ -248,6 +460,51 @@ interfaces:
       name: device
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: iot_get_device
+        value_sets: [iot_get_device]
+
+    sample_value_sets:
+    - id: iot_get_device
+      description: Retrieves device metadata from a registry.
+      # Setup the request object
+      parameters:
+        # Set some default values
+        defaults:
+        - name%device_id="my-device"
+        - name%project="[Google Cloud Project ID]"
+        - name%location="us-central1"
+        - name%registry="[DeviceRegistry ID]"
+
+        # Configure request fields:
+        # - configure so you can provide them to the method (CLI)
+        # - give them a nice text description
+        # - and more
+        attributes:
+        - parameter: name%device
+          sample_argument_name: device_id
+          description: Your Iot Device
+        - parameter: name%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: name%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: name%registry
+          sample_argument_name: registry_id
+          description: ID of the DeviceRegistry
+
+      # Print things out from the response!
+      on_success:
+      - define: device=$resp
+      - print: 
+        - "ID: %s"
+        - device.id
+      - print:
+        - "Retrieving device %s"
+        - device.name
+
   - name: UpdateDevice
     flattening:
       groups:
@@ -265,6 +522,9 @@ interfaces:
       device.name: device
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+
+
+# STOPPED HERE---------------__________----------->
   - name: DeleteDevice
     flattening:
       groups:
@@ -280,6 +540,45 @@ interfaces:
       name: device
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: iot_delete_device
+        value_sets: [iot_delete_device]
+
+    sample_value_sets:
+    - id: iot_delete_device
+      # Setup the request object
+      parameters:
+
+        # Set some default values
+        defaults:
+        - name%device="my-device"
+        - name%project="[Google Cloud Project ID]"
+        - name%location="us-central1"
+        - name%registry="[DeviceRegistry ID]"
+
+        # Configure request fields:
+        # - configure so you can provide them to the method (CLI)
+        # - give them a nice text description
+        # - and more
+        attributes:
+        - parameter: name%device
+          sample_argument_name: device_id
+          description: Your Iot Device ID
+        - parameter: name%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: name%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: name%registry
+          sample_argument_name: registry_id
+          description: ID of the DeviceRegistry
+      # Print things out from the response!
+      on_success:
+        - print: 
+          - "Deleted device"
+
   - name: ListDevices
     flattening:
       groups:
@@ -302,6 +601,138 @@ interfaces:
       parent: registry
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: iot_list_devices
+        value_sets: [iot_list_devices]
+      - region_tag: list_gateways
+        value_sets: [list_gateways]
+      - region_tag: list_devices_for_gateway
+        value_sets: [list_devices_for_gateway]
+    sample_value_sets:
+    - id: iot_list_devices
+      description: List All Devices in Registry
+
+      # Setup the request object
+      parameters:
+
+        # Set some default values
+        defaults:
+        - parent%project="[Google Cloud Project ID]"
+        - parent%location="us-central1"
+        - parent%registry="[DeviceRegistry ID]"
+
+        # Configure request fields:
+        # - configure so you can provide them to the method (CLI)
+        # - give them a nice text description
+        # - and more
+        attributes:
+        - parameter: parent%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: parent%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: parent%registry
+          sample_argument_name: registry_id
+          description: ID of the DeviceRegistry
+
+      # Print things out from the response!
+      on_success:
+      - define: device=$resp
+      - print: 
+        - "ID: %s"
+        - device.id
+      - comment:
+        - "Note that this will show the device config in Base64 encoded format."
+      - print:
+        - "Config: %s\n"
+        - device.config
+    - id: list_gateways
+      description: List All Gateways in Registry
+
+      # Setup the request object
+      parameters:
+
+        # Set some default values
+        defaults:
+        - parent%project="[Google Cloud Project ID]"
+        - parent%location="us-central1"
+        - parent%registry="[DeviceRegistry ID]"
+        - gateway_list_options.gateway_type=GATEWAY
+        # Configure request fields:
+        # - configure so you can provide them to the method (CLI)
+        # - give them a nice text description
+        # - and more
+        attributes:
+        - parameter: parent%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: parent%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: parent%registry
+          sample_argument_name: registry_id
+          description: ID of the DeviceRegistry
+        # - parameter: gateway_list_options.associations_gateway_id
+        #   sample_argument_name: gateway_id
+        #   description: Gateway ID
+
+      # Print things out from the response!
+      on_success:
+      - define: device=$resp
+      - print: 
+        - "ID: %s"
+        - device.id
+      - comment:
+        - "Note that this will show the device config in Base64 encoded format."
+      - print:
+        - "Config: %s\n"
+        - device.config    
+
+    
+    - id: list_devices_for_gateway
+      description: List All Devices that are bound to a gateway
+
+      # Setup the request object
+      parameters:
+
+        # Set some default values
+        defaults:
+        - parent%project="[Google Cloud Project ID]"
+        - parent%location="us-central1"
+        - parent%registry="[DeviceRegistry ID]"
+        - gateway_list_options.associations_gateway_id=my-gateway
+        # Configure request fields:
+        # - configure so you can provide them to the method (CLI)
+        # - give them a nice text description
+        # - and more
+        attributes:
+        - parameter: parent%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: parent%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: parent%registry
+          sample_argument_name: registry_id
+          description: ID of the DeviceRegistry
+        - parameter: gateway_list_options.associations_gateway_id
+          sample_argument_name: gateway_id
+          description: Gateway ID
+
+      # Print things out from the response!
+      on_success:
+      - define: device=$resp
+      - print: 
+        - "ID: %s"
+        - device.id
+      - comment:
+        - "Note that this will show the device config in Base64 encoded format."
+      - print:
+        - "Config: %s\n"
+        - device.config
+
   - name: ModifyCloudToDeviceConfig
     flattening:
       groups:
@@ -319,6 +750,45 @@ interfaces:
       name: device
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: iot_set_device_config
+        value_sets: [iot_set_device_config]
+    sample_value_sets:
+    - id: iot_set_device_config
+      description: Set a device configuration to the specified data (string, JSON) and version (0 for latest).
+
+      # Setup the request object
+      parameters:
+        # Set some default values
+        defaults:
+        - name%project="[Google Cloud Project ID]"
+        - name%location="us-central1"
+        - name%registry="[DeviceRegistry ID]"
+        - name%device="my-device"
+        # Configure request fields:
+        # - configure so you can provide them to the method (CLI)
+        # - give them a nice text description
+        # - and more
+        attributes:
+        - parameter: name%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: name%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: name%registry
+          sample_argument_name: registry_id
+          description: ID of the DeviceRegistry
+        - parameter: name%device
+          sample_argument_name: device_id
+          description: Device ID
+
+      # Print things out from the response!
+      on_success:
+      - define: device=$resp
+
+    
   - name: ListDeviceConfigVersions
     flattening:
       groups:
@@ -334,6 +804,46 @@ interfaces:
       name: device
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: iot_get_device_configs
+        value_sets: [iot_get_device_configs]
+    
+    sample_value_sets:
+    - id: iot_get_device_configs
+      description: Retrieves device metadata from a registry.
+      parameters:
+        defaults:
+        - name%device="my-device"
+        - name%project="[Google Cloud Project ID]"
+        - name%location="us-central1"
+        - name%registry="[DeviceRegistry ID]"
+        attributes:
+        - parameter: name%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: name%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: name%registry
+          sample_argument_name: registry_id
+          description: Device Registry ID
+        - parameter: name%device
+          sample_argument_name: deviceId
+          description: Device ID
+      on_success:
+      - loop:
+         collection: $resp.device_configs
+         variable: config
+         body:
+         - print:
+           - "Config version: %s"
+           - config.version
+         - print:
+           - "Contents: %s\n"
+           - config.binary_data
+
+
   - name: ListDeviceStates
     flattening:
       groups:
@@ -349,6 +859,44 @@ interfaces:
       name: device
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: iot_get_device_state
+        value_sets: [iot_get_device_state]
+    
+    sample_value_sets:
+    - id: iot_get_device_state
+      description: Retrieves device metadata from a registry.
+      parameters:
+        defaults:
+        - name%device="my-device"
+        - name%project="[Google Cloud Project ID]"
+        - name%location="us-central1"
+        - name%registry="[DeviceRegistry ID]"
+        attributes:
+        - parameter: name%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: name%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: name%registry
+          sample_argument_name: registry_id
+          description: Device Registry ID
+        - parameter: name%device
+          sample_argument_name: deviceId
+          description: Device ID
+      on_success:
+      - print: 
+         - "Device state"
+      - loop:
+         collection: $resp.device_states
+         variable: device_state
+         body:
+         - print:
+           - "Device state: %s"
+           - device_state
+  #TODO:
   - name: SetIamPolicy
     flattening:
       groups:
@@ -366,6 +914,33 @@ interfaces:
       resource: registry
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: iot_set_iam_policy
+        value_sets: [iot_set_iam_policy]
+    sample_value_sets:
+    - id: iot_set_iam_policy
+      description: Sets IAM permissions for the given registry to a single role/member.
+      parameters:
+        defaults:
+        - resource%project="[Google Cloud Project ID]"
+        - resource%location="us-central1"
+        - resource%registry="[DeviceRegistry ID]"
+        # - policy%role="admin"
+        attributes:
+        - parameter: resource%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: resource%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: resource%registry
+          sample_argument_name: registry_id
+          description: Device Registry ID
+        - parameter: policy%member
+          sample_argument_name: registry_ids
+          description: Device Registry ID
+
   - name: GetIamPolicy
     flattening:
       groups:
@@ -381,6 +956,45 @@ interfaces:
       resource: registry
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: iot_get_iam_policy
+        value_sets: [iot_get_iam_policy]
+    sample_value_sets:
+    - id: iot_get_iam_policy
+      description: Retrieves IAM permissions for the given registry. 
+      parameters:
+        defaults:
+        - resource%project="[Google Cloud Project ID]"
+        - resource%location="us-central1"
+        - resource%registry="[DeviceRegistry ID]"
+        attributes:
+        - parameter: resource%project
+          sample_argument_name: projectId
+          description: Your Google Cloud Project ID
+        - parameter: resource%location
+          sample_argument_name: cloudRegion
+          description: Location, e.g. us-central1
+        - parameter: resource%registry
+          sample_argument_name: registry_id
+          description: Device Registry ID
+      on_success:
+        - print: ["Policy ETAG: %s", $resp.etag]
+        - loop:
+            collection: $resp.bindings
+            variable: binding
+            body:
+            - print:
+              - "Role: %s"
+              - binding.role
+            
+            - loop:
+                collection: binding.members
+                variable: member
+                body:
+                - print: ["\t%s", member]
+
+
   - name: TestIamPermissions
     flattening:
       groups:
@@ -416,6 +1030,40 @@ interfaces:
       name: device
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: iot_send_command
+        value_sets: [iot_send_command]
+    sample_value_sets:
+    - id: iot_send_command
+      description: Send a command to a device.
+      parameters:
+        defaults:
+        - name%device="my-device"
+        - name%project="[Google Cloud Project ID]"
+        - name%location="us-central1"
+        - name%registry="[DeviceRegistry ID]"
+        - name%binary_data.encoding=LINEAR16
+        attributes:
+        - parameter: name%device
+          sample_argument_name: deviceId
+          description: Device ID
+        - parameter: name%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: name%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: name%registry
+          sample_argument_name: registry_id
+          description: Device Registry ID
+        - parameter: name%data
+          sample_argument_name: data
+          description: The command data to send to the device.
+        - parameter: name%binary_data
+          sample_argument_name: data2
+          description: The command data to send to the device.
+
   - name: BindDeviceToGateway
     flattening:
       groups:
@@ -435,6 +1083,40 @@ interfaces:
       parent: registry
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: bind_device_to_gateway
+        value_sets: [bind_device_to_gateway]
+    sample_value_sets:
+    - id: bind_device_to_gateway
+      description: Bind a device to the gateway.
+      parameters:
+        defaults:
+        - gateway_id="my-gateway"
+        - device_id="my-device"
+        - parent%project="[Google Cloud Project ID]"
+        - parent%location="us-central1"
+        - parent%registry="[DeviceRegistry ID]"
+        attributes:
+        - parameter: gateway_id
+          sample_argument_name: gatewayId
+          description: Gateway ID
+        - parameter: device_id
+          sample_argument_name: deviceId
+          description: Device ID
+        - parameter: parent%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: parent%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: parent%registry
+          sample_argument_name: registry_id
+          description: Device Registry ID
+      on_success:
+        - print: ["Device Bound!"]
+
+
   - name: UnbindDeviceFromGateway
     flattening:
       groups:
@@ -454,6 +1136,39 @@ interfaces:
       parent: registry
     resource_name_treatment: STATIC_TYPES
     timeout_millis: 60000
+    samples:
+      standalone:
+      - region_tag: unbind_device_from_gateway
+        value_sets: [unbind_device_from_gateway]
+    sample_value_sets:
+    - id: unbind_device_from_gateway
+      description: Bind a device to the gateway.
+      parameters:
+        defaults:
+        - gateway_id="my-gateway"
+        - device_id="my-device"
+        - parent%project="[Google Cloud Project ID]"
+        - parent%location="us-central1"
+        - parent%registry="[DeviceRegistry ID]"
+        attributes:
+        - parameter: gateway_id
+          sample_argument_name: gatewayId
+          description: Gateway ID
+        - parameter: device_id
+          sample_argument_name: deviceId
+          description: Device ID
+        - parameter: parent%project
+          sample_argument_name: project_id
+          description: Your Google Cloud Project ID
+        - parameter: parent%location
+          sample_argument_name: location
+          description: Location, e.g. us-central1
+        - parameter: parent%registry
+          sample_argument_name: registry_id
+          description: Device Registry ID
+      on_success:
+        - print: ["Device Unbound: %s", $resp]
+
 resource_name_generation:
 - message_name: google.iam.v1.SetIamPolicyRequest
   field_entity_map:

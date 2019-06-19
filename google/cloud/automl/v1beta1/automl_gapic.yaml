@@ -355,6 +355,7 @@ interfaces:
             Type of the classification problem.
             MULTICLASS: At most one label is allowed per example.
             MULTILABEL: Multiple labels are allowed for one example.
+
   - name: UpdateDataset
     flattening:
       groups:
@@ -373,6 +374,7 @@ interfaces:
         value_sets:
         - automl_vision_update_dataset
     sample_value_sets: []
+
   - name: GetDataset
     flattening:
       groups:
@@ -529,6 +531,7 @@ interfaces:
         - parameter: name%project
           sample_argument_name: project
         - parameter: name%location
+
   - name: ListDatasets
     flattening:
       groups:
@@ -702,6 +705,7 @@ interfaces:
         - parameter: parent%project
           sample_argument_name: project
         - parameter: parent%location
+
   - name: DeleteDataset
     flattening:
       groups:
