@@ -1,0 +1,44 @@
+test:
+  suites:
+  - name: Vision Product Search - Product Set Management
+    setup:
+    - env:
+        name: GOOGLE_PROJECT_ID
+        variable: project_id
+    - code: product_set_id = "fake_set_id"
+    - code: product_display_name = "fake_prodt_set_display_name"
+    - call_may_fail:
+        sample: vision_product_search_create_product_set
+        params:
+          project:
+            variable: project_id
+          product_set_id:
+            variable: product_set_id
+          product_set_display_name:
+            variable: product_display_name
+          
+    teardown:
+    - log:
+      - Cleaning up product_set (in case delete step was not run)
+    - call_may_fail:
+        sample: vision_product_search_delete_product_set
+        params:
+          project:
+            variable: project_id
+          product_set_id:
+            variable: product_set_id
+
+    cases:
+    - name: List All Product Sets.
+      spec:
+      - call:
+          sample: vision_product_search_list_product_sets
+          params:
+            project:
+              variable: project_id
+      - assert_contains:
+        - variable: product_set_id
+        - literal: "Product set display name:"
+        - variable: product_display_name
+
+

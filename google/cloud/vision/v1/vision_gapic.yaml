@@ -153,7 +153,7 @@ interfaces:
       parameters:
         defaults:
         - parent%project = "[Google Cloud Project ID]"
-        - parent%location = "us-central1"
+        - parent%location = "us-west1"
         - product_set.display_name = "[YOUR_DISPLAY_NAME]"
         - product_set_id = "[YOUR_PRODUCT_SET_ID]"
 
@@ -161,6 +161,12 @@ interfaces:
         - parameter: parent%project
           sample_argument_name: project
           description: "Google Project ID"
+        - parameter: product_set.display_name
+          sample_argument_name: product_set_display_name
+          description: "Product Set Display Name"
+        - parameter: product_set_id
+          sample_argument_name: product_set_id
+          description: "Product Set ID"    
       on_success:
       - comment: ["Display the product set information"]
       - print: ["Product set name: %s", $resp.name]
@@ -184,6 +190,30 @@ interfaces:
     timeout_millis: 60000
     field_name_patterns:
       parent: location
+    samples:
+      standalone:
+      - region_tag: vision_product_search_list_product_sets
+        value_sets: [vision_product_search_list_product_sets]
+    sample_value_sets:
+    - id: vision_product_search_list_product_sets
+      description: "List all product sets"
+      parameters:
+        defaults:
+        - parent%project = "[Google Cloud Project ID]"
+        - parent%location = "us-west1"
+
+        attributes:
+        - parameter: parent%project
+          sample_argument_name: project
+          description: "Google Project ID"
+      on_success:
+      - comment: ["Display the product set information"]
+      - print: ["Product set name: %s", $resp.name]
+      - print: ["Product set display name: %s", $resp.display_name]
+      - print: ["Product set index time:"]
+      - print: ["\tseconds: %s", $resp.index_time.seconds]
+      - print: ["\tnanos: %s", $resp.index_time.nanos]
+
   - name: GetProductSet
     flattening:
       groups:
@@ -224,6 +254,30 @@ interfaces:
     timeout_millis: 60000
     field_name_patterns:
       name: product_set
+    samples:
+      standalone:
+      - region_tag: vision_product_search_delete_product_set
+        value_sets: [vision_product_search_delete_product_set]
+    sample_value_sets:
+    - id: vision_product_search_delete_product_set
+      description: "Delete a product set."
+      parameters:
+        defaults:
+        - name%project = "[Google Cloud Project ID]"
+        - name%location = "us-west1"
+        - name%product_set="YOUR_PRODUCT_SET_ID"
+
+        attributes:
+        - parameter: name%project
+          sample_argument_name: project
+          description: "Google Project ID"
+        - parameter: name%product_set
+          sample_argument_name: product_set_id
+          description: "Product Set ID"
+      on_success:
+      - comment: ["Delete the product set."]
+      - print: ["Product set deleted"]
+
   - name: CreateProduct
     flattening:
       groups:
